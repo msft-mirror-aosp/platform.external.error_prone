@@ -1,0 +1,22 @@
+name: "checker_framework_dataflow"
+description:
+    "The Checker Framework is a collection of java annotation processors that "
+    "use JSR308 (Type Annotations) to enhance the Java type system. This "
+    "package contains the Checker Framework's dataflow analysis."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://checkerframework.org/"
+  }
+  url {
+    type: ARCHIVE
+    value: "http://repo1.maven.org/maven2/org/checkerframework/dataflow/1.8.10/dataflow-1.8.10.jar"
+  }
+  url {
+    type: ARCHIVE
+    value: "http://repo1.maven.org/maven2/org/checkerframework/javacutil/1.8.10/javacutil-1.8.10.jar"
+  }
+  version: "1.8.10"
+  last_upgrade_date { year: 2017 month: 8 day: 16 }
+}

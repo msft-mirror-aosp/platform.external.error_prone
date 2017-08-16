@@ -1,0 +1,21 @@
+name: "error_prone"
+description:
+    "Error Prone is a static analysis tool for Java that catches common "
+    "programming mistakes at compile-time."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "http://errorprone.info"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_core/2.0.18/error_prone_core-2.0.18-with-dependencies.jar"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar"
+  }
+  version: "2.0.18"
+  last_upgrade_date { year: 2017 month: 8 day: 16 }
+}
