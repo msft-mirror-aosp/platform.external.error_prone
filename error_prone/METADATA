@@ -10,11 +10,11 @@ third_party {
   }
   url {
     type: ARCHIVE
-    value: "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_core/2.0.19/error_prone_core-2.0.19-with-dependencies.jar"
+    value: "https://oss.sonatype.org/service/local/repositories/releases/content/com/google/errorprone/error_prone_core/2.0.19/error_prone_core-2.0.19-with-dependencies.jar"
   }
   url {
     type: ARCHIVE
-    value: "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.0.19/error_prone_annotations-2.0.19.jar"
+    value: "https://oss.sonatype.org/service/local/repositories/releases/content/com/google/errorprone/error_prone_annotations/2.0.19/error_prone_annotations-2.0.19.jar"
   }
   version: "2.0.19"
   last_upgrade_date { year: 2017 month: 8 day: 28 }
