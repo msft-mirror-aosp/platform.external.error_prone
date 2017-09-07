@@ -9,7 +9,7 @@ third_party {
   }
   url {
     type: ARCHIVE
-    value: "https://repo1.maven.org/maven2/com/google/errorprone/javac/9-dev-r3297-4/javac-9-dev-r3297-4.jar"
+    value: "https://oss.sonatype.org/service/local/repositories/releases/content/com/google/errorprone/javac/9-dev-r3297-4/javac-9-dev-r3297-4.jar"
   }
   version: "9-dev-r3297-4"
   last_upgrade_date { year: 2017 month: 8 day: 16 }
