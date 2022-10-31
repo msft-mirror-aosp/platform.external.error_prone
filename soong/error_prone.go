@@ -113,10 +113,6 @@ func init() {
 	// The checks that are not fatal to the build.
 	config.ErrorProneChecksWarning = []string{
 		// Errorprone default severity ERROR
-		"-Xep:ArrayEquals:WARN",
-		"-Xep:ArrayHashCode:WARN",
-		"-Xep:ArrayToString:WARN",
-		"-Xep:ArraysAsListPrimitiveArray:WARN",
 		"-Xep:BadAnnotationImplementation:WARN",
 		"-Xep:BadShiftAmount:WARN",
 		"-Xep:BanJNDI:WARN",
@@ -206,6 +202,8 @@ func init() {
 		// This check increates the `platformprotos` module's build
 		// time by ~15 minutes
 		"-Xep:SameNameButDifferent:OFF",
+		// Noisy and requires projects to add a dependency on errorprone annotations
+		"-Xep:CanIgnoreReturnValueSuggester:OFF",
 	}
 
 	config.ErrorProneFlags = []string{
