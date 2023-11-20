@@ -178,8 +178,7 @@ func init() {
 	}
 
 	// The checks that are default-disabled
-	config.ErrorProneChecksDefaultDisabled = []string{
-	}
+	config.ErrorProneChecksDefaultDisabled = []string{}
 
 	config.ErrorProneChecksOff = []string{
 		// We are not interested in Guava recommendations
@@ -204,6 +203,10 @@ func init() {
 		"-Xep:SameNameButDifferent:OFF",
 		// Noisy and requires projects to add a dependency on errorprone annotations
 		"-Xep:CanIgnoreReturnValueSuggester:OFF",
+		// Data classes are encouraged to override toString(), but it is not a strict
+		// requirement. The warning is overtriggered when source depends on the API stubs, which
+		// may not include the toString() method.
+		"-Xep:ObjectToString:OFF",
 	}
 
 	config.ErrorProneFlags = []string{
