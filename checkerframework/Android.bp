@@ -30,7 +30,7 @@ license {
 java_import {
     name: "error_prone_checkerframework_dataflow_errorprone",
     host_supported: true,
-    jars: ["dataflow-errorprone-3.21.2.jar"],
+    jars: ["dataflow-errorprone-3.39.0.jar"],
 }
 
 // This is effectively dataflow-nullaway library
