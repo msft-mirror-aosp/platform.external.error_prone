@@ -114,7 +114,6 @@ func init() {
 	config.ErrorProneChecksWarning = []string{
 		// Errorprone default severity ERROR
 		"-Xep:BadAnnotationImplementation:WARN",
-		"-Xep:BadShiftAmount:WARN",
 		"-Xep:BanJNDI:WARN",
 		"-Xep:BareDotMetacharacter:WARN",
 		"-Xep:BoxedPrimitiveEquality:WARN",
@@ -129,8 +128,6 @@ func init() {
 		"-Xep:DurationTemporalUnit:WARN",
 		"-Xep:EmptyTopLevelDeclaration:WARN",
 		"-Xep:EqualsHashCode:WARN",
-		"-Xep:EqualsNull:WARN",
-		"-Xep:EqualsReference:WARN",
 		"-Xep:FormatString:WARN",
 		"-Xep:FromTemporalAccessor:WARN",
 		"-Xep:GetClassOnAnnotation:WARN",
@@ -175,11 +172,8 @@ func init() {
 		"-Xep:SelfEquals:WARN",
 		"-Xep:SizeGreaterThanOrEqualsZero:WARN",
 		"-Xep:StringBuilderInitWithChar:WARN",
-		"-Xep:TreeToString:WARN",
-		"-Xep:TryFailThrowable:WARN",
 		"-Xep:UnnecessaryCheckNotNull:WARN",
 		"-Xep:UnusedCollectionModifiedInPlace:WARN",
-		"-Xep:XorPower:WARN",
 	}
 
 	// The checks that are default-disabled
