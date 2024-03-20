@@ -42,6 +42,11 @@ java_import {
         "//apex_available:anyapex",
         "//apex_available:platform",
     ],
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
 }
 
 java_import {
