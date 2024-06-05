@@ -22,10 +22,10 @@ func init() {
 	// These values are set into build/soong/java/config/config.go so that soong doesn't have any
 	// references to external/error_prone, which may not always exist.
 	config.ErrorProneClasspath = []string{
-		"external/error_prone/error_prone/error_prone_core-2.15.0-with-dependencies.jar",
-		"external/error_prone/error_prone/error_prone_annotations-2.15.0.jar",
-		"external/error_prone/error_prone/error_prone_type_annotations-2.15.0.jar",
-		"external/error_prone/checkerframework/dataflow-errorprone-3.21.2.jar",
+		"external/error_prone/error_prone/error_prone_core-2.23.0-with-dependencies.jar",
+		"external/error_prone/error_prone/error_prone_annotations-2.23.0.jar",
+		"external/error_prone/error_prone/error_prone_type_annotations-2.23.0.jar",
+		"external/error_prone/checkerframework/dataflow-errorprone-3.39.0.jar",
 		"external/error_prone/jFormatString/jFormatString-3.0.0.jar",
 	}
 
@@ -93,7 +93,7 @@ func init() {
 		"-Xep:ProtoStringFieldReferenceEquality:ERROR",
 		"-Xep:ProvidesMethodOutsideOfModule:ERROR",
 		"-Xep:RandomCast:ERROR",
-		"-Xep:RestrictedApiChecker:ERROR",
+		"-Xep:RestrictedApi:ERROR",
 		"-Xep:SelfAssignment:ERROR",
 		"-Xep:ShouldHaveEvenArgs:ERROR",
 		"-Xep:StreamToString:ERROR",
@@ -113,73 +113,23 @@ func init() {
 	// The checks that are not fatal to the build.
 	config.ErrorProneChecksWarning = []string{
 		// Errorprone default severity ERROR
-		"-Xep:BadAnnotationImplementation:WARN",
-		"-Xep:BadShiftAmount:WARN",
-		"-Xep:BanJNDI:WARN",
-		"-Xep:BoxedPrimitiveEquality:WARN",
-		"-Xep:ComparableType:WARN",
-		"-Xep:ComplexBooleanConstant:WARN",
-		"-Xep:CollectionToArraySafeParameter:WARN",
-		"-Xep:ConditionalExpressionNumericPromotion:WARN",
-		"-Xep:DangerousLiteralNull:WARN",
+		"-Xep:ComparisonOutOfRange:WARN",
 		"-Xep:DoubleBraceInitialization:WARN",
-		"-Xep:DurationFrom:WARN",
-		"-Xep:DurationTemporalUnit:WARN",
-		"-Xep:EmptyTopLevelDeclaration:WARN",
 		"-Xep:EqualsHashCode:WARN",
-		"-Xep:EqualsNull:WARN",
-		"-Xep:EqualsReference:WARN",
-		"-Xep:FormatString:WARN",
-		"-Xep:FromTemporalAccessor:WARN",
-		"-Xep:GetClassOnAnnotation:WARN",
-		"-Xep:GetClassOnClass:WARN",
 		"-Xep:GuardedBy:WARN",
-		"-Xep:HashtableContains:WARN",
-		"-Xep:IdentityBinaryExpression:WARN",
-		"-Xep:IdentityHashMapBoxing:WARN",
 		"-Xep:IgnoredPureGetter:WARN",
-		"-Xep:InstantTemporalUnit:WARN",
-		"-Xep:InvalidTimeZoneID:WARN",
-		"-Xep:InvalidZoneId:WARN",
-		"-Xep:IsInstanceIncompatibleType:WARN",
+		"-Xep:ImmutableAnnotationChecker:WARN",
+		"-Xep:ImmutableEnumChecker:WARN",
 		"-Xep:IsLoggableTagLength:WARN",
-		"-Xep:JUnitParameterMethodNotFound:WARN",
-		"-Xep:LockOnBoxedPrimitive:WARN",
-		"-Xep:MathRoundIntLong:WARN",
-		"-Xep:MislabeledAndroidString:WARN",
-		"-Xep:MisusedDayOfYear:WARN",
+		"-Xep:LenientFormatStringValidation:WARN",
 		"-Xep:MissingSuperCall:WARN",
-		"-Xep:MisusedWeekYear:WARN",
-		"-Xep:ModifyingCollectionWithItself:WARN",
-		"-Xep:NoCanIgnoreReturnValueOnClasses:WARN",
-		"-Xep:NonRuntimeAnnotation:WARN",
-		"-Xep:NullableOnContainingClass:WARN",
-		"-Xep:NullTernary:WARN",
-		"-Xep:OverridesJavaxInjectableMethod:WARN",
-		"-Xep:ParcelableCreator:WARN",
-		"-Xep:PeriodFrom:WARN",
-		"-Xep:PreconditionsInvalidPlaceholder:WARN",
-		"-Xep:ProtoBuilderReturnValueIgnored:WARN",
 		"-Xep:ProtocolBufferOrdinal:WARN",
-		"-Xep:ProtoFieldNullComparison:WARN",
-		"-Xep:RandomModInteger:WARN",
 		"-Xep:RectIntersectReturnValueIgnored:WARN",
 		"-Xep:ReturnValueIgnored:WARN",
-		"-Xep:SelfAssignment:WARN",
-		"-Xep:SelfComparison:WARN",
-		"-Xep:SelfEquals:WARN",
-		"-Xep:SizeGreaterThanOrEqualsZero:WARN",
-		"-Xep:StringBuilderInitWithChar:WARN",
-		"-Xep:TreeToString:WARN",
-		"-Xep:TryFailThrowable:WARN",
-		"-Xep:UnnecessaryCheckNotNull:WARN",
-		"-Xep:UnusedCollectionModifiedInPlace:WARN",
-		"-Xep:XorPower:WARN",
 	}
 
 	// The checks that are default-disabled
-	config.ErrorProneChecksDefaultDisabled = []string{
-	}
+	config.ErrorProneChecksDefaultDisabled = []string{}
 
 	config.ErrorProneChecksOff = []string{
 		// We are not interested in Guava recommendations
@@ -204,6 +154,10 @@ func init() {
 		"-Xep:SameNameButDifferent:OFF",
 		// Noisy and requires projects to add a dependency on errorprone annotations
 		"-Xep:CanIgnoreReturnValueSuggester:OFF",
+		// Data classes are encouraged to override toString(), but it is not a strict
+		// requirement. The warning is overtriggered when source depends on the API stubs, which
+		// may not include the toString() method.
+		"-Xep:ObjectToString:OFF",
 	}
 
 	config.ErrorProneFlags = []string{
