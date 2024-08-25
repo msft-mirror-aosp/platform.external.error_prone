@@ -114,7 +114,6 @@ func init() {
 	config.ErrorProneChecksWarning = []string{
 		// Errorprone default severity ERROR
 		"-Xep:ComparisonOutOfRange:WARN",
-		"-Xep:DoubleBraceInitialization:WARN",
 		"-Xep:EqualsHashCode:WARN",
 		"-Xep:GuardedBy:WARN",
 		"-Xep:IgnoredPureGetter:WARN",
