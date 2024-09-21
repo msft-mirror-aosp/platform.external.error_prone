@@ -120,9 +120,7 @@ func init() {
 		"-Xep:ImmutableAnnotationChecker:WARN",
 		"-Xep:ImmutableEnumChecker:WARN",
 		"-Xep:IsLoggableTagLength:WARN",
-		"-Xep:LenientFormatStringValidation:WARN",
 		"-Xep:MissingSuperCall:WARN",
-		"-Xep:ProtocolBufferOrdinal:WARN",
 		"-Xep:RectIntersectReturnValueIgnored:WARN",
 		"-Xep:ReturnValueIgnored:WARN",
 	}
