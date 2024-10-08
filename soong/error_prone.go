@@ -116,13 +116,11 @@ func init() {
 		"-Xep:ComparisonOutOfRange:WARN",
 		"-Xep:EqualsHashCode:WARN",
 		"-Xep:GuardedBy:WARN",
-		"-Xep:IgnoredPureGetter:WARN",
 		"-Xep:ImmutableAnnotationChecker:WARN",
 		"-Xep:ImmutableEnumChecker:WARN",
 		"-Xep:IsLoggableTagLength:WARN",
 		"-Xep:MissingSuperCall:WARN",
 		"-Xep:RectIntersectReturnValueIgnored:WARN",
-		"-Xep:ReturnValueIgnored:WARN",
 	}
 
 	// The checks that are default-disabled
