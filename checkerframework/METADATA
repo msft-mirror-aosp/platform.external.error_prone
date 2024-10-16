@@ -18,5 +18,5 @@ third_party {
     value: "https://repo1.maven.org/maven2/org/checkerframework/javacutil/3.15.0/javacutil-3.15.0-sources.jar"
   }
   version: "3.39.0"
-  last_upgrade_date { year: 2023 month: 11 day: 14}
+  last_upgrade_date { year: 2024 month: 9 day: 27}
 }
