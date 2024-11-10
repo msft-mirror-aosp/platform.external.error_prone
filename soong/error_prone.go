@@ -154,6 +154,9 @@ func init() {
 		// requirement. The warning is overtriggered when source depends on the API stubs, which
 		// may not include the toString() method.
 		"-Xep:ObjectToString:OFF",
+		// Disable the check which is introduced by the Java target 21 until modules 
+		// can be fixed individually (b/377918299).
+		"-Xep:PatternMatchingInstanceof:OFF",
 	}
 
 	config.ErrorProneFlags = []string{
