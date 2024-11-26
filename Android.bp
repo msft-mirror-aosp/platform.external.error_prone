@@ -65,7 +65,6 @@ java_library {
     static_libs: [
         "error_prone_checkerframework_dataflow_errorprone",
         "error_prone_core_jars",
-        "error_prone_javac",
         "error_prone_jFormatString",
     ],
     sdk_version: "core_current",
