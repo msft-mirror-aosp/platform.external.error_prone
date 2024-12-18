@@ -22,9 +22,9 @@ func init() {
 	// These values are set into build/soong/java/config/config.go so that soong doesn't have any
 	// references to external/error_prone, which may not always exist.
 	config.ErrorProneClasspath = []string{
-		"external/error_prone/error_prone/error_prone_core-2.23.0-with-dependencies.jar",
-		"external/error_prone/error_prone/error_prone_annotations-2.23.0.jar",
-		"external/error_prone/error_prone/error_prone_type_annotations-2.23.0.jar",
+		"external/error_prone/error_prone/error_prone_core-2.36.0-with-dependencies.jar",
+		"external/error_prone/error_prone/error_prone_annotations-2.36.0.jar",
+		"external/error_prone/error_prone/error_prone_type_annotations-2.36.0.jar",
 		"external/error_prone/checkerframework/dataflow-errorprone-3.39.0.jar",
 		"external/error_prone/jFormatString/jFormatString-3.0.0.jar",
 	}
@@ -73,7 +73,6 @@ func init() {
 		"-Xep:JUnit4ClassAnnotationNonStatic:ERROR",
 		"-Xep:JUnit4SetUpNotRun:ERROR",
 		"-Xep:JUnit4TearDownNotRun:ERROR",
-		"-Xep:JUnit4TestNotRun:ERROR",
 		"-Xep:JUnitAssertSameCheck:ERROR",
 		"-Xep:JavaxInjectOnAbstractMethod:ERROR",
 		"-Xep:LiteByteStringUtf8:ERROR",
@@ -116,15 +115,14 @@ func init() {
 		"-Xep:ComparisonOutOfRange:WARN",
 		"-Xep:EqualsHashCode:WARN",
 		"-Xep:GuardedBy:WARN",
-		"-Xep:IgnoredPureGetter:WARN",
 		"-Xep:ImmutableAnnotationChecker:WARN",
 		"-Xep:ImmutableEnumChecker:WARN",
 		"-Xep:IsLoggableTagLength:WARN",
-		"-Xep:LenientFormatStringValidation:WARN",
+		"-Xep:JUnit4TestNotRun:WARN",
 		"-Xep:MissingSuperCall:WARN",
-		"-Xep:ProtocolBufferOrdinal:WARN",
 		"-Xep:RectIntersectReturnValueIgnored:WARN",
-		"-Xep:ReturnValueIgnored:WARN",
+		"-Xep:SelfAssertion:WARN",
+		"-Xep:DuplicateBranches:WARN",
 	}
 
 	// The checks that are default-disabled
@@ -157,6 +155,9 @@ func init() {
 		// requirement. The warning is overtriggered when source depends on the API stubs, which
 		// may not include the toString() method.
 		"-Xep:ObjectToString:OFF",
+		// Disable the check which is introduced by the Java target 21 until modules 
+		// can be fixed individually (b/377918299).
+		"-Xep:PatternMatchingInstanceof:OFF",
 	}
 
 	config.ErrorProneFlags = []string{
@@ -168,6 +169,8 @@ func init() {
 		"-XDuseStructuralMostSpecificResolution=true",
 		"-XDuseGraphInference=true",
 		"-XDandroidCompatible=true",
+		// https://github.com/google/error-prone/issues/4595#issuecomment-2424140062
+		"--should-stop=ifError=FLOW",
 		// As we emit errors as warnings,
 		// increase the warning limit.
 		"-Xmaxwarns 9999999",
@@ -175,14 +178,14 @@ func init() {
 		// Extra flags needed by ErrorProne for OpenJDK9 from
 		// http://errorprone.info/docs/installation
 		"-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+		"-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
 		"-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
 		"-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED",
-		"-J--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+		"-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+		"-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+		"-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+		"-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+		"-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
 		"-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
 	}
 }
