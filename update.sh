@@ -12,7 +12,7 @@ fi
 EP_VERSION="$1"
 # checkerframework
 CF_VERSION="$2"
-JAR_REPO="https://oss.sonatype.org/service/local/repositories/releases/content/com/google/errorprone"
+JAR_REPO="https://repo1.maven.org/maven2/com/google/errorprone"
 EP_JAR_URL="${JAR_REPO}/error_prone_core/${EP_VERSION}/error_prone_core-${EP_VERSION}-with-dependencies.jar"
 EP_ANNO_JAR_URL="${JAR_REPO}/error_prone_annotations/${EP_VERSION}/error_prone_annotations-${EP_VERSION}.jar"
 EP_TYPE_ANNO_JAR_URL="${JAR_REPO}/error_prone_type_annotations/${EP_VERSION}/error_prone_type_annotations-${EP_VERSION}.jar"
