@@ -68,6 +68,7 @@ java_library {
         "error_prone_jFormatString",
     ],
     sdk_version: "core_current",
+    jarjar_rules: "jarjar_rules.txt",
 }
 
 java_import {
