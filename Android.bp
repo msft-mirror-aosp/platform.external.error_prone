@@ -71,12 +71,13 @@ java_library {
     jarjar_rules: "jarjar_rules.txt",
 }
 
-java_import {
+java_import_host {
     name: "error_prone_test_helpers",
-    host_supported: true,
     visibility: ["//visibility:public"],
     jars: [
         "error_prone/error_prone_test_helpers-2.41.0.jar",
-        "jimfs/jimfs-1.1.jar",
+    ],
+    static_libs: [
+        "jimfs",
     ],
 }
