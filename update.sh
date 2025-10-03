@@ -1,8 +1,8 @@
 #!/bin/bash
 # Force stop on first error.
 set -e
-if [ $# -ne 2 -a $# -ne 3 ]; then
-    echo "$0 <error prone version> [checkerframework version]" >&2
+if [ $# -ne 1 ]; then
+    echo "$0 <error prone version>" >&2
     exit 1;
 fi
 if [ -z "$ANDROID_BUILD_TOP" ]; then
@@ -10,15 +10,11 @@ if [ -z "$ANDROID_BUILD_TOP" ]; then
     exit 1
 fi
 EP_VERSION="$1"
-# checkerframework
-CF_VERSION="$2"
 JAR_REPO="https://repo1.maven.org/maven2/com/google/errorprone"
 EP_JAR_URL="${JAR_REPO}/error_prone_core/${EP_VERSION}/error_prone_core-${EP_VERSION}-with-dependencies.jar"
 EP_ANNO_JAR_URL="${JAR_REPO}/error_prone_annotations/${EP_VERSION}/error_prone_annotations-${EP_VERSION}.jar"
 EP_TYPE_ANNO_JAR_URL="${JAR_REPO}/error_prone_type_annotations/${EP_VERSION}/error_prone_type_annotations-${EP_VERSION}.jar"
 EP_TEST_HELPERS_JAR_URL="${JAR_REPO}/error_prone_test_helpers/${EP_VERSION}/error_prone_test_helpers-${EP_VERSION}.jar"
-CF_DATAFLOW_JAR_URL="https://repo1.maven.org/maven2/org/checkerframework/dataflow-errorprone/${CF_VERSION}/dataflow-errorprone-${CF_VERSION}.jar"
-CF_DATAFLOW_SOURCES_JAR_URL="https://repo1.maven.org/maven2/org/checkerframework/dataflow-errorprone/${CF_VERSION}/dataflow-errorprone-${CF_VERSION}-sources.jar"
 TOOLS_DIR=$(dirname $0)
 
 function update_jar {
@@ -59,13 +55,3 @@ perl -pi -e "\
     s|\"(external/error_prone/error_prone/error_prone_type_annotations).*\"|\"\\1-${EP_VERSION}.jar\"|;\
     s|\"(external/error_prone/error_prone/error_prone_test_helpers).*\"|\"\\1-${EP_VERSION}.jar\"|;\
 " "$TOOLS_DIR/soong/error_prone.go"
-
-if [ "${CF_VERSION}" != '' ]; then
-  rm -f checkerframework/*.jar*
-  update_jar "${CF_VERSION}" "${CF_DATAFLOW_JAR_URL}" "${TOOLS_DIR}/checkerframework"
-  update_jar "${CF_VERSION}" "${CF_DATAFLOW_SOURCES_JAR_URL}" "${TOOLS_DIR}/checkerframework"
-  perl -pi -e "\
-    s|\"(external/error_prone/checkerframework/dataflow-errorprone).*\"|\"\\1-${CF_VERSION}.jar\"|;\
-  " "$TOOLS_DIR/soong/error_prone.go"
-  perl -pi -e "s|\"(dataflow-errorprone).*\"|\"\\1-${CF_VERSION}.jar\"|;" "${TOOLS_DIR}/checkerframework/Android.bp"
-fi

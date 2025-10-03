@@ -49,24 +49,21 @@ java_import {
     },
 }
 
-java_import {
-    name: "error_prone_core_jars",
-    host_supported: true,
+java_import_host {
+    name: "error_prone_core_prebuilt_jar",
     jars: [
         "error_prone/error_prone_core-2.41.0-with-dependencies.jar",
-        "error_prone/error_prone_annotations-2.41.0.jar",
     ],
 }
 
-java_library {
+java_library_host {
     name: "error_prone_core",
-    host_supported: true,
     visibility: ["//visibility:public"],
     static_libs: [
-        "error_prone_checkerframework_dataflow_errorprone",
-        "error_prone_core_jars",
+        "checkerframework_dataflow_errorprone_prebuilt_jar",
+        "error_prone_annotations",
+        "error_prone_core_prebuilt_jar",
     ],
-    sdk_version: "core_current",
     jarjar_rules: "jarjar_rules.txt",
 }
 
