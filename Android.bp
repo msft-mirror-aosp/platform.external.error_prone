@@ -64,7 +64,18 @@ java_library_host {
         "error_prone_annotations",
         "error_prone_core_prebuilt_jar",
     ],
-    jarjar_rules: "jarjar_rules.txt",
+    errorprone: {
+        enabled: false,
+    },
+}
+
+java_plugin {
+    name: "error_prone_plugin",
+    visibility: ["//visibility:public"],
+    static_libs: ["error_prone_core"],
+    errorprone: {
+        enabled: false,
+    },
 }
 
 java_import_host {

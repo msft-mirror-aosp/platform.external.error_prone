@@ -1,2 +1,0 @@
-# Rename bundled Protobuf to avoid conflicts with external/protobuf.
-rule com.google.protobuf.** com.google.errorprone.bundledprotobuf.@1

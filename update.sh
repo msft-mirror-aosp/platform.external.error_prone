@@ -47,11 +47,3 @@ perl -pi -e "\
     s|\"(error_prone/error_prone_type_annotations).*\"|\"\\1-${EP_VERSION}.jar\"|;\
     s|\"(error_prone/error_prone_test_helpers).*\"|\"\\1-${EP_VERSION}.jar\"|;\
 " "$TOOLS_DIR/Android.bp"
-
-# Update the versions for soong
-perl -pi -e "\
-    s|\"(external/error_prone/error_prone/error_prone_core).*\"|\"\\1-${EP_VERSION}-with-dependencies.jar\"|;\
-    s|\"(external/error_prone/error_prone/error_prone_annotations).*\"|\"\\1-${EP_VERSION}.jar\"|;\
-    s|\"(external/error_prone/error_prone/error_prone_type_annotations).*\"|\"\\1-${EP_VERSION}.jar\"|;\
-    s|\"(external/error_prone/error_prone/error_prone_test_helpers).*\"|\"\\1-${EP_VERSION}.jar\"|;\
-" "$TOOLS_DIR/soong/error_prone.go"
