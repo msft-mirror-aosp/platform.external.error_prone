@@ -29,7 +29,7 @@ license {
     package_name: "Google Error Prone",
     visibility: [":__subpackages__"],
     license_kinds: ["SPDX-license-identifier-Apache-2.0"],
-    license_text: ["error_prone/LICENSE"],
+    license_text: ["LICENSE"],
 }
 
 java_import {
