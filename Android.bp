@@ -100,7 +100,7 @@ java_library_host {
         "error_prone_annotation",
         "error_prone_annotations",
         "guava",
-        "java-diff-utils-prebuilt",
+        "java_diff_utils",
         "jsr330",
     ],
     libs: [
