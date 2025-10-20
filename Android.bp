@@ -14,34 +14,52 @@
 
 package {
     default_applicable_licenses: ["external_error_prone_license"],
-    default_visibility: ["//external/error_prone"],
+    default_visibility: ["//visibility:private"],
 }
 
-// See: http://go/android-license-faq
-// The below licenses are not used in this project. They are mentioned
-// in reference to components not stored here.
-//        "SPDX-license-identifier-BSD",
-//        "SPDX-license-identifier-CPL-1.0",
-//        "SPDX-license-identifier-EPL",
-//        "SPDX-license-identifier-LGPL",
 license {
     name: "external_error_prone_license",
     package_name: "Google Error Prone",
     visibility: [":__subpackages__"],
-    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
-    license_text: ["error_prone/LICENSE"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+        "SPDX-license-identifier-MIT",
+    ],
+    license_text: ["LICENSE"],
 }
 
-java_import {
+// Lets ErrorProne access compiler internals
+java_defaults {
+    name: "error_prone_javac_defaults",
+    javacflags: [
+        "--add-modules=jdk.compiler",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+        "--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+    ],
+}
+
+java_library {
     name: "error_prone_annotations",
+    defaults: ["error_prone_dependency_defaults"],
     host_supported: true,
     visibility: ["//visibility:public"],
-    jars: ["error_prone/error_prone_annotations-2.41.0.jar"],
-    min_sdk_version: "29",
+    srcs: ["annotations/src/main/java/**/*.java"],
+    exclude_srcs: ["annotations/src/main/java/module-info.java"],
+    sdk_version: "core_current",
     apex_available: [
         "//apex_available:anyapex",
         "//apex_available:platform",
     ],
+    // b/267831518: Pin tradefed and dependencies to Java 11.
+    java_version: "11",
     target: {
         windows: {
             enabled: true,
@@ -49,33 +67,115 @@ java_import {
     },
 }
 
-java_import {
-    name: "error_prone_core_jars",
-    host_supported: true,
-    jars: [
-        "error_prone/error_prone_core-2.41.0-with-dependencies.jar",
-        "error_prone/error_prone_annotations-2.41.0.jar",
+java_library_host {
+    name: "error_prone_annotation",
+    defaults: ["error_prone_dependency_defaults"],
+    srcs: ["annotation/src/main/java/**/*.java"],
+    libs: [
+        "guava",
     ],
 }
 
-java_library {
-    name: "error_prone_core",
-    host_supported: true,
-    visibility: ["//visibility:public"],
+filegroup {
+    name: "error_prone_error_properties",
+    srcs: ["check_api/src/main/java/com/google/errorprone/errors.properties"],
+    path: "check_api/src/main/java",
+}
+
+java_library_host {
+    name: "error_prone_check_api",
+    defaults: [
+        "error_prone_javac_defaults",
+        "error_prone_dependency_defaults",
+    ],
+    srcs: [
+        "check_api/src/main/java/**/*.java",
+    ],
+    java_resources: [":error_prone_error_properties"],
     static_libs: [
-        "error_prone_checkerframework_dataflow_errorprone",
-        "error_prone_core_jars",
-        "error_prone_jFormatString",
+        "auto_common",
+        "auto_value_annotations",
+        "caffeine-prebuilt",
+        "checkerframework_dataflow_errorprone_prebuilt_jar",
+        "error_prone_annotation",
+        "error_prone_annotations",
+        "guava",
+        "java_diff_utils",
+        "jsr330",
     ],
-    sdk_version: "core_current",
+    libs: [
+        "auto_value_memoized_extension_annotations",
+        "jspecify",
+    ],
+    plugins: [
+        "auto_value_memoized_extension_plugin",
+        "auto_value_plugin",
+    ],
 }
 
-java_import {
-    name: "error_prone_test_helpers",
-    host_supported: true,
+java_library_host {
+    name: "error_prone_core",
     visibility: ["//visibility:public"],
-    jars: [
-        "error_prone/error_prone_test_helpers-2.41.0.jar",
-        "jimfs/jimfs-1.1.jar",
+    defaults: [
+        "error_prone_javac_defaults",
+        "error_prone_dependency_defaults",
+    ],
+    srcs: [
+        "core/src/main/java/**/*.java",
+        "core/src/main/proto/api_diff.proto",
+        "refaster/src/main/java/**/*.java",
+    ],
+    java_resources: [
+        "core/src/main/java/com/google/errorprone/bugpatterns/apidiff/8to11diff.binarypb",
+        "core/src/main/java/com/google/errorprone/bugpatterns/apidiff/android_java8.binarypb",
+    ],
+    static_libs: [
+        "error_prone_check_api",
+        "google_java_format",
+        "libprotobuf-java-full",
+        "pcollections-prebuilt",
+    ],
+    libs: [
+        "auto_service_annotations",
+        "jspecify",
+    ],
+    plugins: [
+        "auto_oneof_plugin",
+        "auto_service_plugin",
+        "auto_value_builder_plugin",
+        "auto_value_plugin",
+    ],
+    proto: {
+        type: "full",
+    },
+}
+
+java_plugin {
+    name: "error_prone_plugin",
+    defaults: ["error_prone_dependency_defaults"],
+    visibility: ["//visibility:public"],
+    static_libs: ["error_prone_core"],
+}
+
+java_library_host {
+    name: "error_prone_test_helpers",
+    visibility: ["//visibility:public"],
+    defaults: ["error_prone_javac_defaults"],
+    srcs: [
+        "test_helpers/src/main/java/**/*.java",
+    ],
+    static_libs: [
+        "error_prone_check_api",
+        "jimfs",
+    ],
+    libs: [
+        "compile-testing-prebuilt",
+        "error_prone_annotations",
+        "google_java_format",
+        "hamcrest",
+        "hamcrest-library",
+        "jspecify",
+        "junit",
+        "truth",
     ],
 }
