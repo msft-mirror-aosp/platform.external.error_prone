@@ -133,7 +133,7 @@ java_library_host {
         "error_prone_check_api",
         "google_java_format",
         "libprotobuf-java-full",
-        "pcollections-prebuilt",
+        "pcollections",
     ],
     libs: [
         "auto_service_annotations",
