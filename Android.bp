@@ -90,7 +90,18 @@ java_library_host {
     ],
     srcs: [
         "check_api/src/main/java/**/*.java",
-    ],
+    ] + select(release_flag("RELEASE_BUILD_WITH_JDK_25"), {
+        true: [
+            "check_api/src/main/java24/**/*.java",
+        ],
+        default: [],
+    }),
+    exclude_srcs: [] + select(release_flag("RELEASE_BUILD_WITH_JDK_25"), {
+        true: [
+            "check_api/src/main/java/com/google/errorprone/util/ErrorProneSignatureGenerator.java",
+        ],
+        default: [],
+    }),
     java_resources: [":error_prone_error_properties"],
     static_libs: [
         "auto_common",
@@ -133,7 +144,7 @@ java_library_host {
         "error_prone_check_api",
         "google_java_format",
         "libprotobuf-java-full",
-        "pcollections-prebuilt",
+        "pcollections",
     ],
     libs: [
         "auto_service_annotations",
